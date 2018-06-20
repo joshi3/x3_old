@@ -90,7 +90,8 @@ PRODUCT_PACKAGES += \
 	lib_driver_cmd_mt66xx \
 	libwpa_client \
 	hostapd \
-	wpa_supplicant
+	wpa_supplicant \
+	libwifi-hal-mt66xx
 
 # Media
 PRODUCT_COPY_FILES += \
