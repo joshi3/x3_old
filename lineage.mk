@@ -11,7 +11,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
 $(call inherit-product, $(DEVICE_PATH)/device.mk)
 
 # Inherit some common Lineage stuff.
-$(call inherit-product, vendor/cm/config/common_full_phone.mk)
+$(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 
 # Release name
 PRODUCT_RELEASE_NAME := x3
@@ -35,8 +35,6 @@ PRODUCT_CHARACTERISTICS := nosdcard
 PRODUCT_GMS_CLIENTID_BASE := android-leeco
 
 # Build fingerprint from Indian variant.
-PRODUCT_BUILD_PROP_OVERRIDES += \
-	BUILD_FINGERPRINT=Letv/Le1s_IN/X3_HK:6.0/DHXOSOP5801911241S/1479990092:user/release-keys \
-	PRIVATE_BUILD_DESC="full_x500-user 6.0 DHXOSOP5801911241S 1479990092 release-keys"
+BUILD_FINGERPRINT := Letv/Le1s_IN/X3_HK:6.0/DHXOSOP5801911241S/1479990092:user/release-keys
 
 endif
