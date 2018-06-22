@@ -24,8 +24,6 @@ on early-init
 
 on init
 
-export LD_PRELOAD "libmtk_symbols.so"
-
     # Support legacy paths
     symlink /sdcard /mnt/sdcard
 

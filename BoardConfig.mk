@@ -34,6 +34,35 @@ TARGET_2ND_CPU_ABI2 := armeabi
 TARGET_2ND_CPU_VARIANT := cortex-a53
 endif
 
+# Shims
+TARGET_LD_SHIM_LIBS := \
+    /system/lib/libui.so|/system/vendor/lib/libmtk_ui.so \
+    /system/lib64/libui.so|/system/vendor/lib64/libmtk_ui.so \
+    /system/lib/liblog.so|/system/vendor/lib/libmtk_xlog.so \
+    /system/lib64/liblog.so|/system/vendor/lib64/libmtk_xlog.so \
+    /system/lib/libcam_utils.so|/system/vendor/lib/libmtk_cam.so \
+    /system/lib64/libcam_utils.so|/system/vendor/lib64/libmtk_cam.so \
+    /system/lib/hw/audio.primary.mt6795.so|/system/vendor/lib/libmtk_audio.so \
+    /system/lib64/hw/audio.primary.mt6795.so|/system/vendor/lib64/libmtk_audio.so
+    /system/lib/libbinder.so|/system/vendor/lib/libmtk_hacks.so \
+    /system/lib64/libbinder.so|/system/vendor/lib64/libmtk_hacks.so \
+    /system/lib/libgui.so|/system/vendor/lib/libmtk_gui.so \
+    /system/lib64/libgui.so|/system/vendor/lib64/libmtk_gui.so \
+    /system/lib/libmedia.so|/system/vendor/lib/libmtk_omx.so \
+    /system/lib64/libmedia.so|/system/vendor/lib64/libmtk_omx.so \
+    /system/lib/libicuuc.so|/system/vendor/lib/libmtk_icu.so \
+    /system/lib64/libicuuc.so|/system/vendor/lib64/libmtk_icu.so \
+    /system/lib/libcrypto.so|/system/vendor/lib/libmtk_crypto.so \
+    /system/lib64/libcrypto.so|/system/vendor/lib64/libmtk_crypto.so \
+    /system/lib/libsensor.so|/system/vendor/lib/libmtk_sensor.so \
+    /system/lib64/libsensor.so|/system/vendor/lib64/libmtk_sensor.so \
+    /system/lib/libssl.so|/system/vendor/lib/libmtk_ssl.so \
+    /system/lib64/libssl.so|/system/vendor/lib64/libmtk_ssl.so \
+    /system/lib/libbinder.so|/system/vendor/lib/libmtk_string.so \
+    /system/lib/libbinder.so|/system/vendor/lib/libmtk_wvm32.so \
+    /system/lib64/libbinder.so|/system/vendor/lib64/libmtk_wvm64.so \
+    /system/lib64/libbinder.so|/system/vendor/lib64/libmtk_parcel.so
+    
 # FIX Freezing
 TARGET_NO_SENSOR_PERMISSION_CHECK := true
 TARGET_REQUIRES_SYNCHRONOUS_SETSURFACE := true
