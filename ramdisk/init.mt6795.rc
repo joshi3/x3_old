@@ -96,6 +96,9 @@ on fs
 
 # mount different fs end
 
+    chmod 0775 /dev/block/mmcblk0p23
+    chown system system /dev/block/mmcblk0p23
+
 on fs
 
    mount iso9660 loop@/system/etc/iAmCdRom.iso /mnt/cd-rom ro
