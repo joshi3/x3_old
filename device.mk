@@ -51,9 +51,25 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 	ro.debuggable=1 \
 	ro.zygote=zygote64_32 \
 	ro.dalvik.vm.native.bridge=0 \
-	persist.sys.usb.config=mtp \
+	persist.sys.usb.config=,adb \
 	persist.debug.xlog.enable=0 \
-	camera.disable_zsl_mode=1
+	camera.disable_zsl_mode=1 \
+	ro.adb.secure=0 \
+	persist.service.acm.enable=0 \
+	ro.allow.mock.location=0 \
+    ro.config.low_ram=false \
+	ro.mount.fs=EXT4
+	
+# build.prop
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.media.treble_omx=false \
+    persist.service.adb.enable=1 \
+    persist.service.debuggable=1 \
+    persist.sys.root_access=0
+
+# extra log controls prop
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.disable.xlog=0
 
 #ifeq (lineage_x3,$(TARGET_PRODUCT))	#this is included only in lineage atm as some other roms have issue with this
 #PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
