@@ -91,7 +91,10 @@ PRODUCT_PACKAGES += \
 	libwpa_client \
 	hostapd \
 	wpa_supplicant \
+	wpa_supplicant.conf \
 	libwifi-hal-mt66xx \
+	wifilogd \
+	dhcpcd.conf \
 	wificond
 
 # Media
@@ -329,22 +332,22 @@ PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.4-impl \
     android.hardware.camera.provider@2.4-service \
 	android.hardware.bluetooth@1.0-service.mtk \
-	android.hardware.gnss@1.0-impl
-    android.hardware.usb@1.0-service
-    android.hardware.media.omx@1.0
-    android.hardware.keymaster@3.0-impl
-#    android.hardware.keymaster@3.0-service
+	android.hardware.gnss@1.0-impl \
+    android.hardware.usb@1.0-service \
+    android.hardware.media.omx@1.0 \
+    android.hardware.keymaster@3.0-impl \
+#    android.hardware.keymaster@3.0-service \
     android.hardware.gatekeeper@1.0-impl
-#    android.hardware.gatekeeper@1.0-service
+#    android.hardware.gatekeeper@1.0-service \
     android.hardware.vibrator@1.0-impl \
     android.hardware.vibrator@1.0-service
     android.hardware.light@2.0-impl \
-    android.hardware.light@2.0-service
-    android.hardware.sensors@1.0-impl.mtk \
-    android.hardware.sensors@1.0-service.mtk
-    android.hardware.drm@1.0-impl
+    android.hardware.light@2.0-service \
+    android.hardware.sensors@1.0-impl \
+    android.hardware.sensors@1.0-service \
+    android.hardware.drm@1.0-impl \
     android.hardware.health@1.0-impl \
-    android.hardware.health@1.0-service
+    android.hardware.health@1.0-service \
 #    android.hardware.biometrics.fingerprint@2.1-service
 
 #Manifest
