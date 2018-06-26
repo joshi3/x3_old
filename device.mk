@@ -384,8 +384,3 @@ PRODUCT_PACKAGES += \
     libOmxVdec \
     libOmxVenc \
     libstagefrighthw
-	
-# Lineage
-PRODUCT_PACKAGES += \
-    LineageActions \
-	vendor.lineage.livedisplay@1.0-service-sdm
