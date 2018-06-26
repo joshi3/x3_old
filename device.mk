@@ -334,7 +334,7 @@ PRODUCT_PACKAGES += \
 	android.hardware.bluetooth@1.0-service.mtk \
 	android.hardware.gnss@1.0-impl \
     android.hardware.usb@1.0-service \
-    android.hardware.media.omx@1.0 \
+#    android.hardware.media.omx@1.0 \
     android.hardware.keymaster@3.0-impl \
 #    android.hardware.keymaster@3.0-service \
     android.hardware.gatekeeper@1.0-impl
@@ -346,6 +346,7 @@ PRODUCT_PACKAGES += \
     android.hardware.sensors@1.0-impl \
     android.hardware.sensors@1.0-service \
     android.hardware.drm@1.0-impl \
+	android.hardware.drm@1.0-service \
     android.hardware.health@1.0-impl \
     android.hardware.health@1.0-service \
 #    android.hardware.biometrics.fingerprint@2.1-service
@@ -353,3 +354,8 @@ PRODUCT_PACKAGES += \
 #Manifest
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/manifest.xml:system/vendor/manifest.xml
+
+PRODUCT_PACKAGES += \
+    android.hardware.renderscript@1.0-impl \
+	android.hardware.media.omx \
+	android.hardware.usb@1.0-service
