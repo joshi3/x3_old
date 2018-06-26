@@ -359,3 +359,12 @@ PRODUCT_PACKAGES += \
     android.hardware.renderscript@1.0-impl \
 	android.hardware.media.omx \
 	android.hardware.usb@1.0-service
+
+# OMX
+PRODUCT_PACKAGES += \
+    libOmxAacEnc \
+    libOmxAmrEnc \
+    libOmxCore \
+    libOmxVdec \
+    libOmxVenc \
+    libstagefrighthw
