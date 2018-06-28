@@ -1,8 +1,6 @@
 LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
-
-include $(CLEAR_VARS)
 LOCAL_SRC_FILES :=  \
 	mtk_ui.cpp
 LOCAL_SHARED_LIBRARIES := \
@@ -30,9 +28,9 @@ LOCAL_SRC_FILES :=  \
 	mtk_xlog.cpp
 LOCAL_SHARED_LIBRARIES := \
 	liblog
-LOCAL_C_INCLUDES += \	
-	system/core/include/
 LOCAL_MODULE := libmtk_xlog
+LOCAL_C_INCLUDES += \
+	system/core/include/
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_CLASS := SHARED_LIBRARIES
 LOCAL_PROPRIETARY_MODULE := true
@@ -100,7 +98,7 @@ LOCAL_SRC_FILES :=  \
 	crypto.c
 LOCAL_SHARED_LIBRARIES := \
 	libcrypto
-LOCAL_C_INCLUDES += \	
+LOCAL_C_INCLUDES += \
 	frameworks/rs/server/
 LOCAL_MODULE := libmtk_crypto
 LOCAL_MODULE_TAGS := optional
@@ -113,7 +111,7 @@ LOCAL_SRC_FILES :=  \
 	ssl.c
 LOCAL_SHARED_LIBRARIES := \
 	libssl
-LOCAL_C_INCLUDES += \	
+LOCAL_C_INCLUDES += \
 	frameworks/rs/server/
 LOCAL_MODULE := libmtk_ssl
 LOCAL_MODULE_TAGS := optional
@@ -167,15 +165,4 @@ LOCAL_MODULE := libmtk_sensor
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_CLASS := SHARED_LIBRARIES
 LOCAL_PROPRIETARY_MODULE := true
-include $(BUILD_SHARED_LIBRARY)
-
-LOCAL_CLANG := true
-LOCAL_CPPFLAGS := -std=c++1y
-# LOCAL_SANITIZE := integer
-LOCAL_CPPFLAGS += -Wno-exit-time-destructors
-LOCAL_CPPFLAGS += -Wno-global-constructors
-LOCAL_CPPFLAGS += -Wno-c++98-compat-pedantic
-LOCAL_CPPFLAGS += -Wno-four-char-constants
-LOCAL_CPPFLAGS += -Wno-padded
-
 include $(BUILD_SHARED_LIBRARY)

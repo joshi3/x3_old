@@ -103,7 +103,6 @@ PRODUCT_PACKAGES += \
 
 # Wifi
 PRODUCT_PACKAGES += \
-	lib_driver_cmd_mt66xx \
 	libwpa_client \
 	hostapd \
 	wpa_supplicant \
@@ -356,7 +355,7 @@ PRODUCT_PACKAGES += \
     android.hardware.gatekeeper@1.0-impl
 #    android.hardware.gatekeeper@1.0-service \
     android.hardware.vibrator@1.0-impl \
-    android.hardware.vibrator@1.0-service
+    android.hardware.vibrator@1.0-service \
     android.hardware.light@2.0-impl \
     android.hardware.light@2.0-service \
     android.hardware.sensors@1.0-impl \

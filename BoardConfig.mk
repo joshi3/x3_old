@@ -43,7 +43,7 @@ TARGET_LD_SHIM_LIBS := \
     /system/lib/libcam_utils.so|/system/vendor/lib/libmtk_cam.so \
     /system/lib64/libcam_utils.so|/system/vendor/lib64/libmtk_cam.so \
     /system/lib/hw/audio.primary.mt6795.so|/system/vendor/lib/libmtk_audio.so \
-    /system/lib64/hw/audio.primary.mt6795.so|/system/vendor/lib64/libmtk_audio.so
+    /system/lib64/hw/audio.primary.mt6795.so|/system/vendor/lib64/libmtk_audio.so \
     /system/lib/libbinder.so|/system/vendor/lib/libmtk_hacks.so \
     /system/lib64/libbinder.so|/system/vendor/lib64/libmtk_hacks.so \
     /system/lib/libgui.so|/system/vendor/lib/libmtk_gui.so \
