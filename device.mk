@@ -313,10 +313,6 @@ PRODUCT_COPY_FILES += \
 	$(DEVICE_PATH)/etc/init/mediacodec.rc:system/etc/init/mediacodec.rc \
 	$(DEVICE_PATH)/etc/init/mediadrmserver.rc:system/etc/init/mediadrmserver.rc
 
-# camera legacy
-PRODUCT_PACKAGES += \
-	fs_config_files
-
 PRODUCT_PACKAGES += \
 	libbwc \
 	libm4u
