@@ -38,16 +38,12 @@ endif
 TARGET_LD_SHIM_LIBS := \
     /system/lib/libui.so|/system/vendor/lib/libmtk_ui.so \
     /system/lib64/libui.so|/system/vendor/lib64/libmtk_ui.so \
-    /system/lib/liblog.so|/system/vendor/lib/libmtk_xlog.so \
-    /system/lib64/liblog.so|/system/vendor/lib64/libmtk_xlog.so \
     /system/lib/libcam_utils.so|/system/vendor/lib/libmtk_cam.so \
     /system/lib64/libcam_utils.so|/system/vendor/lib64/libmtk_cam.so \
     /system/lib/hw/audio.primary.mt6795.so|/system/vendor/lib/libmtk_audio.so \
     /system/lib64/hw/audio.primary.mt6795.so|/system/vendor/lib64/libmtk_audio.so \
     /system/lib/libbinder.so|/system/vendor/lib/libmtk_hacks.so \
     /system/lib64/libbinder.so|/system/vendor/lib64/libmtk_hacks.so \
-    /system/lib/libgui.so|/system/vendor/lib/libmtk_gui.so \
-    /system/lib64/libgui.so|/system/vendor/lib64/libmtk_gui.so \
     /system/lib/libmedia.so|/system/vendor/lib/libmtk_omx.so \
     /system/lib64/libmedia.so|/system/vendor/lib64/libmtk_omx.so \
     /system/lib/libicuuc.so|/system/vendor/lib/libmtk_icu.so \

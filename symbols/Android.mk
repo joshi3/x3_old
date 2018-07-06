@@ -25,19 +25,6 @@ include $(BUILD_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_SRC_FILES :=  \
-	mtk_xlog.cpp
-LOCAL_SHARED_LIBRARIES := \
-	liblog
-LOCAL_MODULE := libmtk_xlog
-LOCAL_C_INCLUDES += \
-	system/core/include/
-LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE_CLASS := SHARED_LIBRARIES
-LOCAL_PROPRIETARY_MODULE := true
-include $(BUILD_SHARED_LIBRARY)
-
-include $(CLEAR_VARS)
-LOCAL_SRC_FILES :=  \
 	mtk_cam.cpp
 LOCAL_MODULE_CLASS := SHARED_LIBRARIES
 LOCAL_MODULE := libmtk_cam
@@ -52,18 +39,6 @@ LOCAL_SHARED_LIBRARIES := libbinder
 LOCAL_MODULE_CLASS := SHARED_LIBRARIES
 LOCAL_MODULE := libmtk_hacks
 LOCAL_MODULE_TAGS := optional
-LOCAL_PROPRIETARY_MODULE := true
-include $(BUILD_SHARED_LIBRARY)
-
-include $(CLEAR_VARS)
-LOCAL_SRC_FILES :=  \
-	mtk_gui.cpp
-LOCAL_SHARED_LIBRARIES := \
-	libgui \
-	libmedia
-LOCAL_MODULE := libmtk_gui
-LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE_CLASS := SHARED_LIBRARIES
 LOCAL_PROPRIETARY_MODULE := true
 include $(BUILD_SHARED_LIBRARY)
 
@@ -161,6 +136,7 @@ LOCAL_SRC_FILES :=  \
 LOCAL_SHARED_LIBRARIES := \
 	libsensor \
 	libcam.utils.sensorlistener
+LOCAL_C_INCLUDES += frameworks/native/libs/sensor/include/
 LOCAL_MODULE := libmtk_sensor
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_CLASS := SHARED_LIBRARIES
