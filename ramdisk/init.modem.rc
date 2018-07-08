@@ -4,32 +4,72 @@
 # This is a common source of Android security bugs.
 #
 
+#
+# MAL related services (Begin)
+#
+
+on property:ril.mal=1
+    start mal-daemon
+
+on property:ril.mal=0
+    stop mal-daemon
+
+service mal-daemon /system/bin/mtkmal
+    class core
+    socket mal-mfi stream 660 root radio
+    socket volte_imsm stream 660 root radio
+    user radio
+    group radio cache inet misc log system wifi
+
+#
+# MAL related services (End)
+#
+
 on post-fs-data
 
     write /proc/bootprof "post-fs-data: on modem start"
 
     # Modem related device nodes
     mkdir /data/nvram/md  0770 root system
+	mkdir /data/nvram/md2 0770 root system
 
     chown radio radio /sys/kernel/ccci/boot
 
-#SeLinux
-    mkdir /data/ccci_cfg 0770 system radio
-    restorecon /data/ccci_cfg
-    restorecon_recursive /protect_f
-    restorecon_recursive /protect_s
+on init
 
-    # Encrypt phone function
-    setprop vold.post_fs_data_done 1
-
-service gsm0710muxd /system/bin/gsm0710muxd -s /dev/ttyC0 -f 512 -n 8 -m basic
-    class core
-    user root
-    group radio cache inet misc
+service fuse_usbotg /system/bin/sdcard -u 1023 -g 1023 -w 1023 -d /mnt/media_rw/usbotg /storage/usbotg
+    class late_start
     disabled
-    oneshot
 
-service gsm0710muxdmd2 /system/bin/gsm0710muxdmd2 -s /dev/ccci2_tty0 -f 512 -n 8 -m basic
+#
+# Connectivity related services (Begin)
+#
+service wmt_loader /system/bin/wmt_loader
+	class core
+	user root
+	group root system wifi
+	oneshot
+
+service 66xx_launcher /system/bin/6620_launcher -m 4 -p /system/etc/firmware/
+    user system
+    group system
+	class core
+on property:service.wcn.coredump.mode=2
+start stp_dump
+
+service stp_dump /system/bin/stp_dump3
+	user root
+	group root
+	class core
+	disabled
+	oneshot
+#
+# Connectivity related services (End)
+#
+
+on boot
+
+service gsm0710muxd /system/vendor/bin/gsm0710muxd -s /dev/ttyC0 -f 512 -n 8 -m basic
     class core
     user root
     group radio cache inet misc
@@ -37,52 +77,16 @@ service gsm0710muxdmd2 /system/bin/gsm0710muxdmd2 -s /dev/ccci2_tty0 -f 512 -n 8
     oneshot
 
 service muxreport-daemon /system/bin/muxreport
-    class core
+    class root
     user radio
     group radio cache inet misc
     disabled
     oneshot
 
-service ril-daemon-mtk /system/bin/mtkrild
+service ril-daemon-mtk /vendor/bin/hw/rild
     class core
-    socket rild stream 660 root radio
-    socket rild2 stream 660 root radio
-    socket rild3 stream 660 root radio
-    socket rild4 stream 660 root radio
-    socket rild-ims stream 660 root radio
-    socket rild-debug stream 660 radio system
-    socket rild-oem stream 660 radio system
-    socket rild-mtk-ut stream 660 radio net_bt
-    socket rild-mtk-ut-2 stream 660 radio net_bt
-    socket rild-mtk-modem stream 660 radio system
-    socket rild-atci stream 660 root radio
-    socket rild-mal stream 660 radio system
-    socket rild-mal-at stream 660 radio system
-    socket rild-vsim stream 660 root radio
-    socket sap_uim_socket1 stream 660 bluetooth bluetooth
-    socket sap_uim_socket2 stream 660 bluetooth bluetooth
-    socket sap_uim_socket3 stream 660 bluetooth bluetooth
-    socket sap_uim_socket4 stream 660 bluetooth bluetooth
     user root
-    group radio cache inet misc audio sdcard_r sdcard_rw log system
-    disabled
-    oneshot
-
-service ril-daemon-md2 /system/bin/mtkrildmd2
-    class core
-    socket rild-md2 stream 660 root radio
-    socket rild2-md2 stream 660 root radio
-    socket rild-debug-md2 stream 660 radio system
-    socket rild-oem-md2 stream 660 radio system
-    socket rild-mtk-ut-md2 stream 660 radio net_bt
-    socket rild-mtk-ut-2-md2 stream 660 radio net_bt
-    socket rild-mtk-modem-md2 stream 660 radio system
-    socket rild-atci-md2 stream 660 root radio
-    socket rild-mal-md2 stream 660 radio system
-    socket rild-mal-at-md2 stream 660 radio system
-    socket rild-vsim-md2 stream 660 root radio
-    user root
-    group radio cache inet misc audio sdcard_r sdcard_rw log system
+    group radio cache inet misc audio log readproc wakelock system
     disabled
     oneshot
 
@@ -95,36 +99,23 @@ service md_minilog_util /system/bin/md_minilog_util
 #  Modem related services (Begin)
 #
 
-#service permission_check /system/bin/permission_check
-#    class main
-#    user root
-#    group nvram
-#    oneshot
-
-service permission_check /system/bin/permission_check
-    class main
-    user root
-    group system radio
-    oneshot
-
-service ccci_fsd /system/bin/ccci_fsd 0
+service ccci_fsd /system/vendor/bin/ccci_fsd 0
     user root
     group radio system
     class core
     oneshot
 
-service ccci_mdinit /system/bin/ccci_mdinit 0
+service ccci_mdinit /system/vendor/bin/ccci_mdinit 0
     user root
     group radio system
     class core
     oneshot
 
-service ccci_rpcd /system/bin/ccci_rpcd
+service ccci_rpcd /system/vendor/bin/ccci_rpcd
     user root
     group radio system
     class core
     oneshot
-    disable
 
 service pppd_gprs /system/bin/pppd_dt /dev/ttyACM0 debug noauth refuse-eap usepeerdns nodetach
     user root
@@ -144,10 +135,82 @@ service pppd /system/bin/pppd file /data/misc/ppp/ppp_options
 #
 
 #service terservice /system/bin/terservice
-#   class core
+#    class core
 #    user radio
 #    group radio cache inet misc
 #    oneshot
 
 on property:ril.muxreport=1
     start muxreport-daemon
+
+# add by letv for reduced power rate when normal charge be selected begin
+on property:persist.sys.le_fast_chrg_enable=1
+    write /sys/class/power_supply/bq2589x-Wall/disable_quick_charge 0
+on property:persist.sys.le_fast_chrg_enable=0
+    write /sys/class/power_supply/bq2589x-Wall/disable_quick_charge 1
+# add by letv for reduced power rate when normal charge be selected end
+
+# goodix fingerprint begin
+service goodixfpd /system/bin/goodixfingerprintd
+    class main
+    user system
+    group system
+
+service nvram_proximity /system/bin/nvram_proximity
+    user root
+    group system
+    class core
+    oneshot
+#
+# VoLTE related services (Begin)
+#
+
+on property:ril.volte.stack=1
+    start volte_stack
+
+on property:ril.volte.stack=0
+    stop volte_stack
+
+on property:ril.volte.ua=1
+    start volte_ua
+
+on property:ril.volte.ua=0
+    stop volte_ua
+
+on property:ril.volte.imcb=1
+    start volte_imcb
+
+on property:ril.volte.imcb=0
+    stop volte_imcb
+
+service volte_ua /system/bin/volte_ua
+    class core
+    socket volte_ua stream 660 root system
+    user root
+    group system log inet radio net_admin root
+    oneshot
+    disabled
+
+service volte_stack /system/bin/volte_stack
+    class core
+    socket volte_stack stream 660 root system
+    user root
+    group system log inet radio
+    oneshot
+    disabled
+
+service volte_imcb /system/bin/volte_imcb
+    class core
+    socket volte_imsa1 stream 660 root radio
+    socket volte_imsa2 stream 660 root radio
+    socket volte_imsvt1 stream 660 root radio
+    socket volte_imsvt2 stream 660 root radio
+    socket volte_ut stream 660 root radio
+    user system
+    group system log inet radio
+    oneshot
+    disabled
+
+#
+# VoLTE related services (End)
+#

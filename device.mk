@@ -149,21 +149,13 @@ PRODUCT_TAGS += dalvik.gc.type-precise
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 
 PRODUCT_COPY_FILES += \
-	$(DEVICE_PATH)/ramdisk/enableswap.sh:root/enableswap.sh \
-	$(DEVICE_PATH)/ramdisk/permissions.sh:root/permissions.sh \
-	$(DEVICE_PATH)/ramdisk/factory_init.project.rc:root/factory_init.project.rc \
-	$(DEVICE_PATH)/ramdisk/factory_init.rc:root/factory_init.rc \
+	
 	$(DEVICE_PATH)/ramdisk/fstab.mt6795:root/fstab.mt6795 \
 	$(DEVICE_PATH)/ramdisk/init.modem.rc:root/init.modem.rc \
 	$(DEVICE_PATH)/ramdisk/init.mt6795.rc:root/init.mt6795.rc \
 	$(DEVICE_PATH)/ramdisk/init.mt6795.usb.rc:root/init.mt6795.usb.rc \
-	$(DEVICE_PATH)/ramdisk/init.project.rc:root/init.project.rc \
-	$(DEVICE_PATH)/ramdisk/ueventd.mt6795.rc:root/ueventd.mt6795.rc \
-	$(DEVICE_PATH)/ramdisk/init.volte.rc:root/init.volte.rc \
-	$(DEVICE_PATH)/ramdisk/init.mal.rc:root/init.mal.rc \
-	$(DEVICE_PATH)/ramdisk/init.usb.configfs.rc:root/init.usb.configfs.rc \
-	$(DEVICE_PATH)/ramdisk/init.trustonic.rc:root/init.trustonic.rc
-
+	$(DEVICE_PATH)/ramdisk/ueventd.mt6795.rc:root/ueventd.mt6795.rc
+	
 PRODUCT_COPY_FILES += \
 	frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
 	frameworks/native/data/etc/android.hardware.camera.autofocus.xml:system/etc/permissions/android.hardware.camera.autofocus.xml \
