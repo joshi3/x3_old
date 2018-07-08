@@ -149,7 +149,6 @@ PRODUCT_TAGS += dalvik.gc.type-precise
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 
 PRODUCT_COPY_FILES += \
-	
 	$(DEVICE_PATH)/ramdisk/fstab.mt6795:root/fstab.mt6795 \
 	$(DEVICE_PATH)/ramdisk/init.modem.rc:root/init.modem.rc \
 	$(DEVICE_PATH)/ramdisk/init.mt6795.rc:root/init.mt6795.rc \
