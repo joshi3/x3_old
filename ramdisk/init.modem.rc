@@ -34,7 +34,11 @@ on post-fs-data
 	mkdir /data/nvram/md2 0770 root system
 
     chown radio radio /sys/kernel/ccci/boot
+    # ignore permission check
+    write /data/ccci_cfg/md_new_ver.1 "flag"
+    chmod 0660 /data/ccci_cfg/md_new_ver.1
 
+    setprop vold.post_fs_data_done 1
 on init
 
 service fuse_usbotg /system/bin/sdcard -u 1023 -g 1023 -w 1023 -d /mnt/media_rw/usbotg /storage/usbotg

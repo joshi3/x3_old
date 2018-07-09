@@ -7,24 +7,22 @@ import init.modem.rc
 
 
 on early-init
+
     mount debugfs debugfs /sys/kernel/debug
     chmod 0755 /sys/kernel/debug
     chmod 0644 /proc/cmdline
     # NVRAM
     cp /fstab.mt6795 /data/nvram/fstab.mt6795
-    #Create nvdata mount point
-    mkdir /nvdata 0771 root system
-    start ueventd
+    
+	start ueventd
 
-    write /proc/bootprof "INIT: usr/eng build setting"
-
+    
 on init
 
-export LD_PRELOAD "libmtk_symbols.so"
-    # For debugging:
-    setprop ro.secure=0
-    setprop ro.adb.secure=0
-    setprop ro.debuggable=1
+    # mount points
+    mkdir /protect_f 0770 system radio
+    mkdir /protect_s 0770 system radio
+    mkdir /nvdata    0775 root nvram
 
     # Support legacy paths
     symlink /sdcard /mnt/sdcard
@@ -41,8 +39,6 @@ export LD_PRELOAD "libmtk_symbols.so"
     chmod 0664 /proc/mtk_battery_cmd/battery_cmd
 
     export USBOTG_STORAGE /storage/usbotg
-    mkdir /protect_f 0771 system system
-    mkdir /protect_s 0771 system system
     mkdir /system
     mkdir /data 0771 system system
     mkdir /cache 0770 system cache
@@ -137,7 +133,33 @@ on post-fs
     chmod 0770 /protect_s
     mkdir /protect_s/properties 0770 system system
 
-    # once everything is setup, no need to modify /
+    # NVRAM
+    copy /fstab.mt6735 /nvdata/fstab.mt6735
+    exec u:r:nvram_perms:s0 -- /system/bin/chown -R nvram:nvram /nvdata
+    exec u:r:nvram_perms:s0 -- /system/bin/chmod -R 0770 /nvdata
+    chown root nvram /nvdata
+    chmod 0775 /nvdata
+    mkdir /nvdata/APCFG 0775 root nvram
+    mkdir /nvdata/APCFG/APRDCL 0775 nvram nvram
+    mkdir /nvdata/APCFG/APRDEB 0770 root nvram
+    mkdir /nvdata/md     0770 nvram nvram
+    mkdir /nvdata/md_cmn 0770 nvram nvram
+    mkdir /nvdata/media  0775 nvram nvram
+    # Kernel (root) needs access to these 2 files
+    chown root nvram /nvdata/APCFG/APRDEB/WIFI
+    chown root nvram /nvdata/APCFG/APRDEB/WIFI_CUSTOM
+    # Audio settings
+    chown system nvram /nvdata/APCFG/APRDCL/FILE_VER
+    chown system nvram /nvdata/media/Audio_ver1_Vol_custom
+
+    restorecon_recursive /nvdata
+
+    # Workaround for old nvram blobs
+    mkdir /dev/block/platform/mtk-msdc.0/by-name 0755 root system
+    symlink /dev/block/platform/mtk-msdc.0/11230000.MSDC0/by-name/nvram /dev/block/platform/mtk-msdc.0/by-name/nvram
+    symlink /dev/block/platform/mtk-msdc.0/11230000.MSDC0/by-name/proinfo /dev/block/platform/mtk-msdc.0/by-name/proinfo
+
+	# once everything is setup, no need to modify /
     mount rootfs rootfs / ro remount
 
     #change permissions for mediaserver
@@ -197,6 +219,26 @@ on post-fs
     chown system log /proc/last_kmsg
     chmod 0440 /proc/last_kmsg
 
+    # Wifi
+    chmod 0660 /dev/wmtWifi
+    chown system system /dev/wmtWifi
+
+    # BT
+    chmod 0660 /dev/stpbt
+    chown radio bluetooth /dev/stpbt
+
+    chmod 0660 /dev/stpwmt
+    chown system system /dev/stpwmt
+
+    chmod 0660 /dev/wmtdetect
+    chown system system /dev/wmtdetect
+
+    # GPS
+    chmod 0660 /dev/gps
+    chown system gps /dev/gps
+    chmod 0660 /dev/stpgps
+    chown gps gps /dev/stpgps
+
 on late-fs
     # boot time fs tune
     write /sys/block/mmcblk0/queue/iostats 0
@@ -206,15 +248,14 @@ on late-fs
 
 on post-fs-data
 
+    symlink /nvdata /data/nvram
+    restorecon /data/nvram
+	
     # create basic filesystem structure
-    mkdir /data/nvram 0771 root system
-    mkdir /data/nvram/media 0771 media audio
-	mkdir /data/misc 01771 system misc
+    mkdir /data/misc 01771 system misc
     mkdir /data/misc/adb 02750 system shell
     mkdir /data/misc/bluedroid 02770 bluetooth bluetooth
-    
-    symlink /nvdata /data/nvram
-    restorecon_recursive /nvdata
+ 
     # mxg2320
     mkdir /data/mxg2320 0770 root system
 
@@ -232,7 +273,10 @@ on post-fs-data
 
     # GPS
     mkdir /data/gps_mnl 0771 gps system
-    mkdir /data/misc/gps 0770 gps system
+    mkdir /data/misc/gps 0770 gps gps
+	
+	# AGPS
+    mkdir /data/agps_supl 0770 gps system
     
     # Smartwake
     chown system system /sys/devices/soc/soc:touch@/smartwake_active
@@ -307,16 +351,6 @@ on post-fs-data
 
     #set mlock limit to infinate (for m4u operation)
     setrlimit 8 -1 -1
-
-    # create basic filesystem structure
-    # mkdir /data/nvram 2770 root system
-    # We chown/chmod /nvdata again so because mount is run as root + defaults
-    chown root system /nvdata
-    chmod 0771 /nvdata
-    symlink /nvdata /data/nvram
-	
-    # Set SELinux security contexts on upgrade or policy update.
-    restorecon_recursive /nvdata
 
     # Sensor
     chmod 0660 /dev/hwmsensor
@@ -714,7 +748,7 @@ on post-fs-data
     chown root system /dev/devmap
 
     # bluetooth
-    mkdir /data/@btmtk 0770 bluetooth net_bt
+    mkdir /data/@btmtk 0770 bluetooth bluetooth
     chown bluetooth bluetooth /dev/hid-keyboard
     chmod 0660 /dev/hid-keyboard
 
@@ -887,14 +921,14 @@ on post-fs-data
 	insmod /system/lib/modules/mtk_wmt_detect.ko
 
 	# Create char device file for WMT, GPS, BT, FM, WIFI
-    mknod /dev/stpwmt c 190 0;
-    mknod /dev/stpgps c 191 0;
-    mknod /dev/stpbt  c 192 0;
+#   mknod /dev/stpwmt c 190 0;
+#    mknod /dev/stpgps c 191 0;
+#    mknod /dev/stpbt  c 192 0;
 
     chmod 0660 /dev/stpwmt
     chown system system /dev/stpwmt
 
-    mknod /dev/wmtWifi c 153 0
+#    mknod /dev/wmtWifi c 153 0
     chmod 0660 /dev/wmtWifi
     chown system system /dev/wmtWifi
 #disable quick charge
