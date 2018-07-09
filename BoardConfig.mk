@@ -35,30 +35,20 @@ TARGET_2ND_CPU_VARIANT := cortex-a53
 endif
 
 # Shims
-TARGET_LD_SHIM_LIBS := \
-    /system/lib/libui.so|/system/vendor/lib/libmtk_ui.so \
-    /system/lib64/libui.so|/system/vendor/lib64/libmtk_ui.so \
-    /system/lib/libcam_utils.so|/system/vendor/lib/libmtk_cam.so \
-    /system/lib64/libcam_utils.so|/system/vendor/lib64/libmtk_cam.so \
-    /system/lib/hw/audio.primary.mt6795.so|/system/vendor/lib/libmtk_audio.so \
-    /system/lib64/hw/audio.primary.mt6795.so|/system/vendor/lib64/libmtk_audio.so \
-    /system/lib/libbinder.so|/system/vendor/lib/libmtk_hacks.so \
-    /system/lib64/libbinder.so|/system/vendor/lib64/libmtk_hacks.so \
-    /system/lib/libmedia.so|/system/vendor/lib/libmtk_omx.so \
-    /system/lib64/libmedia.so|/system/vendor/lib64/libmtk_omx.so \
-    /system/lib/libicuuc.so|/system/vendor/lib/libmtk_icu.so \
-    /system/lib64/libicuuc.so|/system/vendor/lib64/libmtk_icu.so \
-    /system/lib/libcrypto.so|/system/vendor/lib/libmtk_crypto.so \
-    /system/lib64/libcrypto.so|/system/vendor/lib64/libmtk_crypto.so \
-    /system/lib/libsensor.so|/system/vendor/lib/libmtk_sensor.so \
-    /system/lib64/libsensor.so|/system/vendor/lib64/libmtk_sensor.so \
-    /system/lib/libssl.so|/system/vendor/lib/libmtk_ssl.so \
-    /system/lib64/libssl.so|/system/vendor/lib64/libmtk_ssl.so \
-    /system/lib/libbinder.so|/system/vendor/lib/libmtk_string.so \
-    /system/lib/libbinder.so|/system/vendor/lib/libmtk_wvm32.so \
-    /system/lib64/libbinder.so|/system/vendor/lib64/libmtk_wvm64.so \
-    /system/lib64/libbinder.so|/system/vendor/lib64/libmtk_parcel.so
-    
+TARGET_INCLUDE_UI_SYMBOLS := true
+TARGET_INCLUDE_AUDIO_SYMBOLS := true
+TARGET_INCLUDE_CAM_SYMBOLS := true
+TARGET_INCLUDE_MTK_HACK_SYMBOLS := true
+TARGET_INCLUDE_OMX_SYMBOLS := true
+TARGET_INCLUDE_ICU_SYMBOLS := true
+TARGET_INCLUDE_CRYPTO_SYMBOLS := true
+TARGET_INCLUDE_SSL_SYMBOLS := true
+TARGET_INCLUDE_STRING_32_SYMBOLS := true
+TARGET_INCLUDE_WVM_32_SYMBOLS := true
+TARGET_INCLUDE_WVM_64_SYMBOLS := true
+TARGET_INCLUDE_PARCEL_SYMBOLS := true
+TARGET_INCLUDE_SENSOR_SYMBOLS := true
+
 # FIX Freezing
 TARGET_NO_SENSOR_PERMISSION_CHECK := true
 TARGET_REQUIRES_SYNCHRONOUS_SETSURFACE := true
