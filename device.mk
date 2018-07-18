@@ -320,7 +320,7 @@ PRODUCT_PACKAGES += \
     android.hardware.audio@2.0-impl \
     android.hardware.audio@2.0-service \
     android.hardware.audio.effect@2.0-impl \
-    android.hardware.broadcastradio@1.0-impl
+    android.hardware.broadcastradio@1.0-impl \
 #    android.hardware.soundtrigger@2.0-impl \
     android.hardware.graphics.allocator@2.0-impl \
     android.hardware.graphics.allocator@2.0-service \
@@ -340,7 +340,7 @@ PRODUCT_PACKAGES += \
 #    android.hardware.media.omx@1.0 \
     android.hardware.keymaster@3.0-impl \
 #    android.hardware.keymaster@3.0-service \
-    android.hardware.gatekeeper@1.0-impl
+    android.hardware.gatekeeper@1.0-impl \
 #    android.hardware.gatekeeper@1.0-service \
     android.hardware.vibrator@1.0-impl \
     android.hardware.vibrator@1.0-service \
